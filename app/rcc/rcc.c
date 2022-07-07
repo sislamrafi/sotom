@@ -1,6 +1,7 @@
 #include "rcc.h"
 
-void rcc_config_HSE8MHz_SYS180MHz() {
+void rcc_config_HSE8MHz_SYS180MHz()
+{
   const uint16_t PLL_M = 4;
   const uint16_t PLL_N = 180;
   const uint16_t PLL_P = 0;
@@ -30,7 +31,7 @@ void rcc_config_HSE8MHz_SYS180MHz() {
   RCC->PLLCFGR = ((PLL_M) | (PLL_N << 6) | (1 << 22)) & ~(PLL_P << 16);
 
   // 6. Enable the PLL and wait for it to become ready
-  RCC->CR |= (1 << 24); // ON PLL
+  RCC->CR |= (1 << 24); // PLL ENABLE
   while (!(RCC->CR & (1 << 25)))
     ; // wait for PLL ready
 
