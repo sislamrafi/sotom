@@ -34,7 +34,7 @@ void pinConfig(GPIO_t *port, uint8_t pin, uint32_t config)
   // then set mode
   port->MODER &= ~(0b11 << (pin * 2));
   port->MODER |=
-      (((config & GPIO_MODER_MASK) >> GPIO_MODER_MASK_Pos) << (pin * 2));
+      (((config >> GPIO_MODER_MASK_Pos) & 0b11) << (pin * 2));
 
   // set pupd  to 00
   // then set pupd
@@ -100,37 +100,33 @@ void pinInterruptConfig(GPIO_t *port, uint8_t pin,
                         uint8_t trigger, uint8_t priority)
 {
   RCC->APB2ENR |= (1 << 14); // Enable SYSCNFG Clock
-
-  uint8_t EXTICode = port == GPIOA   ? 0x0
-                     : port == GPIOB ? 0x1
-                     : port == GPIOC ? 0x2
                      : port == GPIOD ? 0x3
                      : port == GPIOE ? 0x4
                      : port == GPIOF ? 0x5
                      : port == GPIOG ? 0x6
                                      : 0x7;
 
-  // set EXTICR
-  SYSCFG->EXTICR[(uint8_t)(pin / 4)] &= ~(0xf << (4 * (pin % 4)));
-  SYSCFG->EXTICR[(uint8_t)(pin / 4)] |= (EXTICode << (4 * (pin % 4)));
+                     // set EXTICR
+                     SYSCFG->EXTICR[(uint8_t)(pin / 4)] &= ~(0xf << (4 * (pin % 4)));
+                     SYSCFG->EXTICR[(uint8_t)(pin / 4)] |= (EXTICode << (4 * (pin % 4)));
 
-  EXTI->IMR |= (1 << pin);                       // Disable mask on EXTI1
-  EXTI->RTSR |= ((trigger & 0b1) << pin);        // set rising triger
-  EXTI->FTSR |= (((trigger >> 1) & 0b1) << pin); // set falling triger
+                     EXTI->IMR |= (1 << pin);                       // Disable mask on EXTI1
+                     EXTI->RTSR |= ((trigger & 0b1) << pin);        // set rising triger
+                     EXTI->FTSR |= (((trigger >> 1) & 0b1) << pin); // set falling triger
 
-  IRQn_Type _IRQn;
+                     IRQn_Type _IRQn;
 
-  _IRQn = pin == 0   ? EXTI0_IRQn
-          : pin == 1 ? EXTI1_IRQn
-          : pin == 2 ? EXTI2_IRQn
-          : pin == 3 ? EXTI3_IRQn
-          : pin == 4 ? EXTI4_IRQn
-          : pin <= 9 ? EXTI9_5_IRQn
-                     : EXTI15_10_IRQn;
+                     _IRQn = pin == 0   ? EXTI0_IRQn
+                             : pin == 1 ? EXTI1_IRQn
+                             : pin == 2 ? EXTI2_IRQn
+                             : pin == 3 ? EXTI3_IRQn
+                             : pin == 4 ? EXTI4_IRQn
+                             : pin <= 9 ? EXTI9_5_IRQn
+                                        : EXTI15_10_IRQn;
 
-  if (priority > 0)
-    __NVIC_SetPriority(_IRQn, priority);
-  __NVIC_EnableIRQ(_IRQn);
+                     if (priority > 0)
+                       __NVIC_SetPriority(_IRQn, priority);
+                     __NVIC_EnableIRQ(_IRQn);
 }
 
 uint8_t isInterruptPending(GPIO_t *port, uint8_t pin)
