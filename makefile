@@ -7,7 +7,7 @@ LFLAGS= -nostdlib -T stm32f446xx.ld -Wl,-Map=$(OUTPUT_FOLDER)/final.map
 
 OUTPUT_FOLDER = build
 
-all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o lcd162a.o final.elf
+all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o spi.o lcd162a.o final.elf
 
 main.o:app/main/main.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
@@ -22,6 +22,9 @@ timer.o:app/timer/timer.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
 gpio.o:app/gpio/gpio.c
+	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
+
+spi.o:app/spi/spi.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
 lcd162a.o:app/LCD162A/LCD162A.c
