@@ -176,4 +176,39 @@ typedef struct {
 
 #define SYSCFG ((SYSCFG_t *)0x40013800)
 
+typedef struct {
+  uint32_t volatile CR1;        /*!< I2C Control register 1,     Address offset: 0x00 */
+  uint32_t volatile CR2;        /*!< I2C Control register 2,     Address offset: 0x04 */
+  uint32_t volatile OAR1;       /*!< I2C Own address register 1, Address offset: 0x08 */
+  uint32_t volatile OAR2;       /*!< I2C Own address register 2, Address offset: 0x0C */
+  uint32_t volatile DR;         /*!< I2C Data register,          Address offset: 0x10 */
+  uint32_t volatile SR1;        /*!< I2C Status register 1,      Address offset: 0x14 */
+  uint32_t volatile SR2;        /*!< I2C Status register 2,      Address offset: 0x18 */
+  uint32_t volatile CCR;        /*!< I2C Clock control register, Address offset: 0x1C */
+  uint32_t volatile TRISE;      /*!< I2C TRISE register,         Address offset: 0x20 */
+  uint32_t volatile FLTR;       /*!< I2C FLTR register,          Address offset: 0x24 */
+} I2C_t;
+
+#define I2C1 ((I2C_t *)0x40005400)
+#define I2C2 ((I2C_t *)0x40005800)
+#define I2C3 ((I2C_t *)0x40005C00)
+
+
+typedef struct {
+  uint32_t volatile SR;         /*!< USART Status register,                   Address offset: 0x00 */
+  uint32_t volatile DR;         /*!< USART Data register,                     Address offset: 0x04 */
+  uint32_t volatile BRR;        /*!< USART Baud rate register,                Address offset: 0x08 */
+  uint32_t volatile CR1;        /*!< USART Control register 1,                Address offset: 0x0C */
+  uint32_t volatile CR2;        /*!< USART Control register 2,                Address offset: 0x10 */
+  uint32_t volatile CR3;        /*!< USART Control register 3,                Address offset: 0x14 */
+  uint32_t volatile GTPR;       /*!< USART Guard time and prescaler register, Address offset: 0x18 */
+} USART_t;
+
+#define USART1 ((USART_t *) 0x40011000)
+#define USART2 ((USART_t *) 0x40004400)
+#define USART3 ((USART_t *) 0x40004800)
+#define USART4 ((USART_t *) 0x40004C00)
+#define USART5 ((USART_t *) 0x40005000)
+#define USART6 ((USART_t *) 0x40011400)
+
 #endif
