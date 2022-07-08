@@ -64,6 +64,18 @@ void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config)
     port->AFRH &= ~(0b1111 << ((pin - 8) * 4));
     port->AFRH |= (((config >> GPIO_AF_MASK_Pos) & 0b1111) << ((pin - 8) * 4));
   }
+
+  if (((config >> GPIO_LOCK_PIN_Pos) & 0b1)) {
+    uint32_t lcr = (1 << pin);
+    lcr |= (1 << 16);
+    port->LCKR = lcr;
+    lcr &= ~(1 << 16);
+    port->LCKR = lcr;
+    lcr |= (1 << 16);
+    port->LCKR = lcr;
+
+    lcr = port->LCKR;
+  }
 }
 
 void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value)
@@ -74,6 +86,11 @@ void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value)
 GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin)
 {
   return ((port->IDR >> pin) & 0b1);
+}
+
+uint8_t isPinLocked(GPIO_t *port, uint8_t pin) {
+  uint32_t lcr = port->LCKR;
+  return (lcr >> pin) & 0b1;
 }
 
 void pinInterruptConfig(GPIO_t *port, uint8_t pin,

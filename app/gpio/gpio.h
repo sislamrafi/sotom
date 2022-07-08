@@ -57,7 +57,12 @@ typedef enum GPIO_CONFIG_e
   GPIO_AF_AF15 = 0xF00,
 
   GPIO_AF_MASK = 0b111100000000,
-  GPIO_AF_MASK_Pos = 6,
+  GPIO_AF_MASK_Pos = 8,
+
+  // LCKR_REG 0b 01 00 00 00 00 00 00
+  GPIO_LOCK_PIN = 0b01000000000000,
+  GPIO_LOCK_PIN_Pos = 12,
+
 } GPIO_CONFIG;
 
 typedef enum GPIO_PIN_VALUE_e
@@ -76,6 +81,7 @@ void GPIO_ENABLE(GPIO_t *port);
 void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config);
 void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value);
 GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin);
+uint8_t isPinLocked(GPIO_t *port,uint8_t pin);
 
 void pinInterruptConfig(GPIO_t *port, uint8_t pin,
                         GPIO_INTERRUPT_TRIGGER trigger, uint8_t priority);
