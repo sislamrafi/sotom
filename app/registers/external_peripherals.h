@@ -6,7 +6,8 @@
 /*
     Data Structure for GPIO port
 */
-typedef struct {
+typedef struct
+{
   uint32_t volatile MODER;   /* Offset: 0x00 (R/W) Mode Register */
   uint32_t volatile OTYPER;  /* Offset: 0x04 (R/W) Output Type Register */
   uint32_t volatile OSPEEDR; /* Offset: 0x08 (R/W) Output Speed Register */
@@ -14,11 +15,11 @@ typedef struct {
   uint32_t volatile IDR;     /* Offset: 0x10 (R/W) Input Data Register */
   uint32_t volatile ODR;     /* Offset: 0x14 (R/W) Output Data Register */
   uint32_t volatile BSRR;    /* Offset: 0x18 (R/W) Bit Set/Reset Register */
-  uint32_t volatile LCKR; /* Offset: 0x1C (R/W) Configuration Lock Register */
-  uint32_t volatile AFRL; /* Offset: 0x20 (R/W) Alternate Function Low Register
-                           */
-  uint32_t volatile AFRH; /* Offset: 0x24 (R/W) Alternate Function High Register
-                           */
+  uint32_t volatile LCKR;    /* Offset: 0x1C (R/W) Configuration Lock Register */
+  uint32_t volatile AFRL;    /* Offset: 0x20 (R/W) Alternate Function Low Register
+                              */
+  uint32_t volatile AFRH;    /* Offset: 0x24 (R/W) Alternate Function High Register
+                              */
 } GPIO_t;
 
 #define GPIOA ((GPIO_t *)0x40020000)
@@ -33,11 +34,12 @@ typedef struct {
 /*
     Data Structure for RCC
 */
-typedef struct {
-  uint32_t volatile CR;      /* Offset: 0x00 (R/W) Clock Control Register */
-  uint32_t volatile PLLCFGR; /* Offset: 0x04 (R/W) PLL Configuration Register */
-  uint32_t volatile CFGR; /* Offset: 0x08 (R/W) Clock Configuration Register */
-  uint32_t volatile CIR;  /* Offset: 0x0C (R/W) Clock Interrupt Register */
+typedef struct
+{
+  uint32_t volatile CR;       /* Offset: 0x00 (R/W) Clock Control Register */
+  uint32_t volatile PLLCFGR;  /* Offset: 0x04 (R/W) PLL Configuration Register */
+  uint32_t volatile CFGR;     /* Offset: 0x08 (R/W) Clock Configuration Register */
+  uint32_t volatile CIR;      /* Offset: 0x0C (R/W) Clock Interrupt Register */
   uint32_t volatile AHB1RSTR; /* Offset: 0x10 (R/W) AHB1 Peripheral Reset
                                  Register */
   uint32_t volatile AHB2RSTR; /* Offset: 0x14 (R/W) AHB2 Peripheral Reset
@@ -52,10 +54,10 @@ typedef struct {
   uint32_t reserved1[2];
   uint32_t volatile AHB1ENR;
   /* Offset: 0x30 (R/W) AHB1 Peripheral Clock Enable Register */ // 13
-  uint32_t volatile AHB2ENR; /* Offset: 0x34 (R/W) AHB2 Peripheral Clock Enable
-                                Register */
-  uint32_t volatile AHB3ENR; /* Offset: 0x38 (R/W) AHB3 Peripheral Clock Enable
-                                Register */
+  uint32_t volatile AHB2ENR;                                     /* Offset: 0x34 (R/W) AHB2 Peripheral Clock Enable
+                                                                    Register */
+  uint32_t volatile AHB3ENR;                                     /* Offset: 0x38 (R/W) AHB3 Peripheral Clock Enable
+                                                                    Register */
   uint32_t reserved2;
   uint32_t volatile APB1ENR; /* Offset: 0x40 (R/W) APB1 Peripheral Clock Enable
                                 Register */
@@ -98,7 +100,8 @@ typedef struct {
 /*
     Data Structure for PWR
 */
-typedef struct {
+typedef struct
+{
   uint32_t CR;
   uint32_t CSR;
 } PWR_t;
@@ -108,7 +111,8 @@ typedef struct {
 /*
     Data Structure for Timer 2-5
 */
-typedef struct {
+typedef struct
+{
   uint32_t CR1;
   uint32_t CR2;
   uint32_t SMCR;
@@ -138,7 +142,8 @@ typedef struct {
 /*
     Data Structure for FLASH
 */
-typedef struct {
+typedef struct
+{
   uint32_t ACR;
   uint32_t KYER;
   uint32_t OPTKEYR;
@@ -152,7 +157,8 @@ typedef struct {
 /*
     Data Structure for EXTI
 */
-typedef struct {
+typedef struct
+{
   uint32_t IMR;
   uint32_t EMR;
   uint32_t RTSR;
@@ -166,7 +172,8 @@ typedef struct {
 /*
     Data Structure for SYSCFG
 */
-typedef struct {
+typedef struct
+{
   uint32_t MEMRMP;
   uint32_t PCM;
   uint32_t EXTICR[4];
@@ -175,5 +182,26 @@ typedef struct {
 } SYSCFG_t;
 
 #define SYSCFG ((SYSCFG_t *)0x40013800)
+
+/*
+    Data Structure for SPI
+*/
+typedef struct
+{
+  uint32_t CR1;
+  uint32_t CR2;
+  uint32_t SR;
+  uint32_t DR;
+  uint32_t CRCPR;
+  uint32_t RXCRCR;
+  uint32_t TXCRCR;
+  uint32_t I2SCFGR;
+  uint32_t I2SPR;
+} SPI_t;
+
+#define SPI1 ((SPI_t *)0x40013000)
+#define SPI2 ((SPI_t *)0x40003800)
+#define SPI3 ((SPI_t *)0x40003C00)
+#define SPI4 ((SPI_t *)0x40013400)
 
 #endif

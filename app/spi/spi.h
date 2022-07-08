@@ -11,15 +11,16 @@ typedef enum SPI_CONFIG_e
      ***CONFIG CR1 REGISTER***
      */
     SPI_CR1_MASK = 0XFFFF,
+    SPI_CR1_Pos = 0,
 
     // BIDIMODE: Bidirectional mode
     SPI_BIDIMODE_ENABLE = 0b1000000000000000,
     SPI_BIDIMODE_Pos = 15,
 
     // BIDIOE: Output enable in bidirectional mode
-    SPI_BIDI_OUTPUT_ENABLE = 0b100000000000000,
+    // SPI_BIDI_OUTPUT_ENABLE = 0b100000000000000,
     // SPI_BIDI_OUTPUT_DISABLE = 0b0,
-    SPI_BIDIOE_Pos = 14,
+    // SPI_BIDIOE_Pos = 14,
 
     // CRCEN: CRC calculation enable
     SPI_CRC_ENABLE = 0b10000000000000,
@@ -78,7 +79,8 @@ typedef enum SPI_CONFIG_e
     /*
      ***CONFIG CR2 REGISTER***
      */
-    SPI_CR2_MASK = 0XF70000,
+    SPI_CR2_MASK = 0XF7,
+    SPI_CR2_Pos = 16,
 
     // TXEIE: Tx buffer empty interrupt enable
     SPI_TXEIE_ENABLE = 0b100000000000000000000000,
@@ -109,6 +111,10 @@ typedef enum SPI_CONFIG_e
     SPI_RXDMA_ENABLE = 0b10000000000000000,
     SPI_RXDMA_Pos = 16,
 
+    // ENABLE ALL INTERRUPT FOR SPI
+    SPI_INTERRUPT_ENABLE = 0b111000000000000000000000,
+    SPI_INTERRUPT_Pos = 21,
+
 } SPI_CONFIG;
 
 // FUNCTION PROTOTYPE
@@ -117,8 +123,8 @@ typedef enum SPI_CONFIG_e
 void SPI_CONFIG(SPI_t *spi, SPI_CONFIG config);
 void SPI_ENABLE(SPI_t *spi);
 void SPI_DISABLE(SPI_t *spi);
-void SPI_TRANSMIT();
-void SPI_RECIEVE();
+void SPI_TRANSMIT(SPI_t *spi, uint8_t data, uint32_t datasize);
+void SPI_RECIEVE(SPI_t *spi, uint8_t *data, uint32_t datasize);
 #endif
 
 /*
