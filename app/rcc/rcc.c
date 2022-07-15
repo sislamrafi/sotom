@@ -1,11 +1,18 @@
 #include "rcc.h"
 
-void rcc_config_HSE8MHz_SYS180MHz()
-{
+volatile uint32_t SYS_CLOCK_SPEED;
+
+void rcc_config_HSE8MHz_SYS180MHz() {
   const uint16_t PLL_M = 4;
   const uint16_t PLL_N = 180;
   const uint16_t PLL_P = 0;
 
+<<<<<<< Updated upstream:app/rcc/rcc.c
+=======
+  // SYS_CLOCK_SPEED = (( (double)(EXTERNAL_CLOCK_SPEED/PLL_M) * (double)PLL_N) / (double)((double)(PLL_P+1)/2.0f));
+  SYS_CLOCK_SPEED= (EXTERNAL_CLOCK_SPEED*PLL_N*(PLL_P+1))/(PLL_M*2);
+
+>>>>>>> Stashed changes:app/libs/rcc/rcc.c
   // 1. ENABLE HSE and wait for the HSE to become Ready
   RCC->CR |= (1 << 16); // 16th bit on for HSE on
   while (!(RCC->CR & (1 << 17)))
@@ -31,7 +38,7 @@ void rcc_config_HSE8MHz_SYS180MHz()
   RCC->PLLCFGR = ((PLL_M) | (PLL_N << 6) | (1 << 22)) & ~(PLL_P << 16);
 
   // 6. Enable the PLL and wait for it to become ready
-  RCC->CR |= (1 << 24); // PLL ENABLE
+  RCC->CR |= (1 << 24); // ON PLL
   while (!(RCC->CR & (1 << 25)))
     ; // wait for PLL ready
 

@@ -4,8 +4,7 @@
 #include "../registers/external_peripherals.h"
 #include "../registers/internal_peripherals.h"
 
-typedef enum GPIO_CONFIG_e
-{
+typedef enum GPIO_CONFIG_e {
   // MODER_REG 0b 00 00 00 xx
   GPIO_INPUT = 0b00,
   GPIO_OUTPUT = 0b01,
@@ -22,7 +21,7 @@ typedef enum GPIO_CONFIG_e
   GPIO_PUPD_MASK = 0b1100,
   GPIO_PUPD_MASK_Pos = 2,
 
-  // OTYPE_REG 0b 00 xx 00 00
+  // OTYPE_REG 0b 00 Xx 00 00
   GPIO_PUSH_PULL = 0b00000000,
   GPIO_OPEN_DRAIN = 0b00010000,
 
@@ -65,14 +64,12 @@ typedef enum GPIO_CONFIG_e
 
 } GPIO_CONFIG;
 
-typedef enum GPIO_PIN_VALUE_e
-{
+typedef enum GPIO_PIN_VALUE_e {
   GPIO_PIN_HIGH = 1,
   GPIO_PIN_LOW = 0,
 } GPIO_PIN_VALUE;
 
-typedef enum GPIO_INTERRUPT_TRIGGER_e
-{
+typedef enum GPIO_INTERRUPT_TRIGGER_e {
   GPIO_INTERRUPT_TRIGGER_RISING = 0b01,
   GPIO_INTERRUPT_TRIGGER_FALLING = 0b10,
 } GPIO_INTERRUPT_TRIGGER;

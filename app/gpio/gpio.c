@@ -1,9 +1,7 @@
 #include "gpio.h"
 
-void GPIO_ENABLE(GPIO_t *port)
-{
-  switch ((uint32_t)port)
-  {
+void GPIO_ENABLE(GPIO_t *port) {
+  switch ((uint32_t)port) {
   case (uint32_t)GPIOA:
     RCC->AHB1ENR |= 1;
     break;
@@ -27,13 +25,17 @@ void GPIO_ENABLE(GPIO_t *port)
   }
 }
 
+<<<<<<< Updated upstream:app/gpio/gpio.c
 void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config)
 {
+=======
+void pinConfig(GPIO_t *port, uint8_t pin, uint32_t config) {
+>>>>>>> Stashed changes:app/libs/gpio/gpio.c
   // set moder to 00
   // then set mode
   port->MODER &= ~(0b11 << (pin * 2));
   port->MODER |=
-      (((config >> GPIO_MODER_MASK_Pos) & 0b11) << (pin * 2));
+      (((config & GPIO_MODER_MASK) >> GPIO_MODER_MASK_Pos) << (pin * 2));
 
   // set pupd  to 00
   // then set pupd
@@ -50,15 +52,12 @@ void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config)
   port->OSPEEDR &= ~(0b11 << (pin * 2));
   port->OSPEEDR |= (((config >> GPIO_OSPEEDR_MASK_Pos) & 0b11) << (pin * 2));
 
-  if (pin <= 7)
-  {
+  if (pin <= 7) {
     // set AFRL to 0b0000
     // then set AFRL
     port->AFRL &= ~(0b1111 << (pin * 4));
     port->AFRL |= (((config >> GPIO_AF_MASK_Pos) & 0b1111) << (pin * 4));
-  }
-  else
-  {
+  } else {
     // set AFRH to 0b0000
     // then set AFRH
     port->AFRH &= ~(0b1111 << ((pin - 8) * 4));
@@ -78,13 +77,16 @@ void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config)
   }
 }
 
+<<<<<<< Updated upstream:app/gpio/gpio.c
 void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value)
 {
+=======
+void digitalWrite(GPIO_t *port, uint8_t pin, uint8_t value) {
+>>>>>>> Stashed changes:app/libs/gpio/gpio.c
   port->BSRR = value ? 1 << pin : (1 << pin) << 16;
 }
 
-GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin)
-{
+GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin) {
   return ((port->IDR >> pin) & 0b1);
 }
 
@@ -94,8 +96,12 @@ uint8_t isPinLocked(GPIO_t *port, uint8_t pin) {
 }
 
 void pinInterruptConfig(GPIO_t *port, uint8_t pin,
+<<<<<<< Updated upstream:app/gpio/gpio.c
                         GPIO_INTERRUPT_TRIGGER trigger, uint8_t priority)
 {
+=======
+                        uint8_t trigger, uint8_t priority) {
+>>>>>>> Stashed changes:app/libs/gpio/gpio.c
   RCC->APB2ENR |= (1 << 14); // Enable SYSCNFG Clock
 
   uint8_t EXTICode = port == GPIOA   ? 0x0
@@ -130,10 +136,8 @@ void pinInterruptConfig(GPIO_t *port, uint8_t pin,
   __NVIC_EnableIRQ(_IRQn);
 }
 
-uint8_t isInterruptPending(GPIO_t *port, uint8_t pin)
-{
-  if (EXTI->PR & (1 << pin))
-  {
+uint8_t isInterruptPending(GPIO_t *port, uint8_t pin) {
+  if (EXTI->PR & (1 << pin)) {
     EXTI->PR |= (1 << pin);
     return 1;
   }
