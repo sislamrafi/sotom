@@ -1,8 +1,8 @@
 #ifndef __GPIO_H__
 #define __GPIO_H__
 
-#include "../registers/external_peripherals.h"
-#include "../registers/internal_peripherals.h"
+#include "../../../core/stm32f446re/registers/external/peripherals.h"
+#include "../../../core/stm32f446re/registers/internal/peripherals.h"
 
 typedef enum GPIO_CONFIG_e {
   // MODER_REG 0b 00 00 00 xx
@@ -75,13 +75,13 @@ typedef enum GPIO_INTERRUPT_TRIGGER_e {
 } GPIO_INTERRUPT_TRIGGER;
 
 void GPIO_ENABLE(GPIO_t *port);
-void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config);
-void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value);
+void pinConfig(GPIO_t *port, uint8_t pin, uint32_t config);
+void digitalWrite(GPIO_t *port, uint8_t pin, uint8_t value);
 GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin);
 uint8_t isPinLocked(GPIO_t *port,uint8_t pin);
 
 void pinInterruptConfig(GPIO_t *port, uint8_t pin,
-                        GPIO_INTERRUPT_TRIGGER trigger, uint8_t priority);
+                        uint8_t trigger, uint8_t priority);
 uint8_t isInterruptPending(GPIO_t *port, uint8_t pin);
 
 #endif

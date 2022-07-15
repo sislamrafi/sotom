@@ -25,7 +25,7 @@ void GPIO_ENABLE(GPIO_t *port) {
   }
 }
 
-void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config) {
+void pinConfig(GPIO_t *port, uint8_t pin, uint32_t config) {
   // set moder to 00
   // then set mode
   port->MODER &= ~(0b11 << (pin * 2));
@@ -72,7 +72,7 @@ void pinConfig(GPIO_t *port, uint8_t pin, GPIO_CONFIG config) {
   }
 }
 
-void digitalWrite(GPIO_t *port, uint8_t pin, GPIO_PIN_VALUE value) {
+void digitalWrite(GPIO_t *port, uint8_t pin, uint8_t value) {
   port->BSRR = value ? 1 << pin : (1 << pin) << 16;
 }
 
@@ -86,7 +86,7 @@ uint8_t isPinLocked(GPIO_t *port, uint8_t pin) {
 }
 
 void pinInterruptConfig(GPIO_t *port, uint8_t pin,
-                        GPIO_INTERRUPT_TRIGGER trigger, uint8_t priority) {
+                        uint8_t trigger, uint8_t priority) {
   RCC->APB2ENR |= (1 << 14); // Enable SYSCNFG Clock
 
   uint8_t EXTICode = port == GPIOA   ? 0x0

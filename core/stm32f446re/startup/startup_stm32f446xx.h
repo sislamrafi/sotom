@@ -9,6 +9,7 @@
 
 #define STACK_START SRAM_END
 
+extern uint32_t _stext;
 extern uint32_t _etext;
 extern uint32_t _sdata;
 extern uint32_t _edata;
@@ -17,10 +18,16 @@ extern uint32_t _la_data;
 extern uint32_t _sbss;
 extern uint32_t _ebss;
 
+volatile uint32_t CURRENT_MSP = STACK_START;
+volatile uint32_t _bss_size=0;
+volatile uint32_t _data_size=0;
+volatile uint32_t _text_size=0;
+
 void Reset_Handler(void);
 void Default_Handler(void);
 
-int main(void);
+void main(void);
+void __debugRamUsage(void);
 
 void NMI_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void HardFault_Handler(void) __attribute__((weak, alias("Default_Handler")));
