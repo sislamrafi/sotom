@@ -1,36 +1,49 @@
 CC=arm-none-eabi-gcc
+#CC=arm-none-eabi-g++
 MACH=cortex-m4
 CFLAGS= -c -mcpu=$(MACH) -mthumb -std=gnu11 -Wall -O0
-LFLAGS= -nostdlib -T stm32f446xx.ld -Wl,-Map=$(OUTPUT_FOLDER)/final.map
+#CFLAGS= -c -mcpu=$(MACH) -mthumb -std=gnu++11 -Wall -O0
+LFLAGS= -nostdlib -T core/stm32f446re/stm32f446xx.ld -Wl,-Map=$(OUTPUT_FOLDER)/final.map
 
 #VPATH = ./app/
 
 OUTPUT_FOLDER = build
 
-all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o spi.o lcd162a.o final.elf
+all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o spi.o usart.o lcd162a.o final.elf
 
+#main app
 main.o:app/main/main.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-startup_stm32f446xx.o:app/startup/startup_stm32f446xx.c
+#startup file
+startup_stm32f446xx.o:core/stm32f446re/startup/startup_stm32f446xx.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-rcc.o:app/rcc/rcc.c
+#rcc config
+rcc.o:app/libs/rcc/rcc.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-timer.o:app/timer/timer.c
+#timer config
+timer.o:app/libs/timer/timer.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-gpio.o:app/gpio/gpio.c
+#gpio config
+gpio.o:app/libs/gpio/gpio.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-spi.o:app/spi/spi.c
+#usart config
+usart.o:app/protocols/usart/usart.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-lcd162a.o:app/LCD162A/LCD162A.c
+#spi config
+spi.o:app/protocols/spi/spi.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o lcd162a.o
+#lcd162a lib
+lcd162a.o:app/devices/output/LCD162A/LCD162A.c
+	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
+
+final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o usart.o lcd162a.o
 	$(CC) $(LFLAGS) $(OUTPUT_FOLDER)/*.o  -o $(OUTPUT_FOLDER)/$@
 
 clean-windows:

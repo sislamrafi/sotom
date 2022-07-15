@@ -10,6 +10,7 @@ SECTIONS
 {
     .text :
     {
+        _stext = .;
          *(.isr_vector)
          *(.text)
          *(.rodata)

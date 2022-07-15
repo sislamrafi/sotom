@@ -203,5 +203,23 @@ typedef struct
 #define SPI2 ((SPI_t *)0x40003800)
 #define SPI3 ((SPI_t *)0x40003C00)
 #define SPI4 ((SPI_t *)0x40013400)
+    Data Structure for USART
+*/
+
+typedef struct
+    {
+      uint32_t SR;
+      uint32_t DR;
+      uint32_t BRR;
+      uint32_t CR1;
+      uint32_t CR2;
+      uint32_t CR3;
+      uint32_t GTPR;
+    } USART_t;
+
+#define USART1 ((USART_t *)0x40011000)
+#define USART2 ((USART_t *)0x40004400)
+#define USART3 ((USART_t *)0x40004800)
+#define USART4 ((USART_t *)0x40004C00)
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef __LCD162A_H_
 #define __LCD162A_H_
 
-#include "../timer/timer.h"
-#include "../gpio/gpio.h"
+#include "../../../libs/timer/timer.h"
+#include "../../../libs/gpio/gpio.h"
 
 #define LCD_EN_DELAY 1200//in microsecond
 
