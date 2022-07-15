@@ -4,6 +4,12 @@
 #include "../../../core/stm32f446re/registers/external/peripherals.h"
 #include "../../../core/stm32f446re/registers/internal/peripherals.h"
 
+typedef struct __PinWithFunction {
+  GPIO_t *GPIO;
+  uint8_t pin;
+  uint32_t af;
+} PinWithFunction;
+
 typedef enum GPIO_CONFIG_e {
   // MODER_REG 0b 00 00 00 xx
   GPIO_INPUT = 0b00,

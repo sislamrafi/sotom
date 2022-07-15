@@ -9,24 +9,6 @@ void Default_Handler_Loop(void) {
   // do nothing
 }
 
-#define RAM_USAGE_SAMPLE_COUNT_LEN 10000000
-static uint32_t RAM_USAGE_SAMPLE_COUNT = 0;
-void __debugRamUsage() {
-  RAM_USAGE_SAMPLE_COUNT++;
-
-  register uint32_t msp __asm("sp");
-
-  if (msp < CURRENT_MSP){
-    CURRENT_MSP = msp;
-    RAM_USAGE_SAMPLE_COUNT = 0;
-  }
-
-  if (RAM_USAGE_SAMPLE_COUNT > RAM_USAGE_SAMPLE_COUNT_LEN){
-    RAM_USAGE_SAMPLE_COUNT = 0;
-    CURRENT_MSP = STACK_START;
-  }
-}
-
 /*
     1)  copy .data section to sram
     2)  init the .bss section to 0x0 sram

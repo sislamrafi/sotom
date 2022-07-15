@@ -9,7 +9,7 @@ LFLAGS= -nostdlib -T core/stm32f446re/stm32f446xx.ld -Wl,-Map=$(OUTPUT_FOLDER)/f
 
 OUTPUT_FOLDER = build
 
-all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o usart.o lcd162a.o final.elf
+all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o stdlibc.o lcd162a.o final.elf
 
 #main app
 main.o:app/main/main.c
@@ -31,6 +31,14 @@ timer.o:app/libs/timer/timer.c
 gpio.o:app/libs/gpio/gpio.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
+#debug config
+debug.o:app/libs/debug/debug.c
+	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
+
+#stdlibc config
+stdlibc.o:app/libs/stdlib/stdlibc.c
+	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
+
 #usart config
 usart.o:app/protocols/usart/usart.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
@@ -39,7 +47,7 @@ usart.o:app/protocols/usart/usart.c
 lcd162a.o:app/devices/output/LCD162A/LCD162A.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o usart.o lcd162a.o
+final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o lcd162a.o stdlibc.o
 	$(CC) $(LFLAGS) $(OUTPUT_FOLDER)/*.o  -o $(OUTPUT_FOLDER)/$@
 
 clean-windows:

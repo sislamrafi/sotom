@@ -3,21 +3,13 @@
 
 #define __USART_H__
 
-#include "../../../core/stm32f446re/registers/external/peripherals.h"
-#include "../../../core/stm32f446re/registers/internal/peripherals.h"
+#include "../../main/board.h"
 #include "../../libs/gpio/gpio.h"
-
 
 typedef struct __BitLocation_t {
   uint32_t *REG;
   uint8_t bit;
 } BitLocation;
-
-typedef struct __PinWithFunction {
-  GPIO_t *GPIO;
-  uint8_t pin;
-  uint32_t af;
-} PinWithFunction;
 
 typedef struct USART_CINFIG_t {
   BitLocation EN;
@@ -29,10 +21,11 @@ typedef struct USART_CINFIG_t {
 } USART_CINFIG;
 
 // firstrx, then tx
-static const USART_CINFIG USART2_PIN_A3_A2 __attribute__((unused))  = {.EN = {(uint32_t*)(&(RCC->APB1ENR)), 17},
-                                        .RX = {GPIOA, 3, GPIO_AF_AF7},
-                                        .TX = {GPIOA, 2, GPIO_AF_AF7},
-                                        .IRQn = USART2_IRQn};
+static const USART_CINFIG USART2_PIN_A3_A2
+    __attribute__((unused)) = {.EN = {(uint32_t *)(&(RCC->APB1ENR)), 17},
+                               .RX = {GPIOA, 3, GPIO_AF_AF7},
+                               .TX = {GPIOA, 2, GPIO_AF_AF7},
+                               .IRQn = USART2_IRQn};
 
 void configUSART(USART_t *usart, USART_CINFIG config, uint32_t baudrate);
 void usartTx(USART_t *usart, char ch);

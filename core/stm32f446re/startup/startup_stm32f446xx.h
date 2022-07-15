@@ -1,13 +1,7 @@
 #ifndef __STARTUP_STM32F446XX_H_
 #define __STARTUP_STM32F446XX_H_
 
-#include <stdint.h> //
-
-#define SRAM_START 0x20000000U
-#define SRAM_SIZE (128U * 1024U) // 128KB
-#define SRAM_END ((SRAM_START) + (SRAM_SIZE))
-
-#define STACK_START SRAM_END
+#include "board.h"
 
 extern uint32_t _stext;
 extern uint32_t _etext;
@@ -18,7 +12,6 @@ extern uint32_t _la_data;
 extern uint32_t _sbss;
 extern uint32_t _ebss;
 
-volatile uint32_t CURRENT_MSP = STACK_START;
 volatile uint32_t _bss_size=0;
 volatile uint32_t _data_size=0;
 volatile uint32_t _text_size=0;
@@ -26,8 +19,7 @@ volatile uint32_t _text_size=0;
 void Reset_Handler(void);
 void Default_Handler(void);
 
-void main(void);
-void __debugRamUsage(void);
+int main(void);
 
 void NMI_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void HardFault_Handler(void) __attribute__((weak, alias("Default_Handler")));

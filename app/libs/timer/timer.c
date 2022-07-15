@@ -1,4 +1,6 @@
 #include "timer.h"
+// #include "../../protocols/usart/usart.h"
+// #include "../stdlib/stdlibc.h"
 
 static uint32_t TIM2_INTERRUPT_CALL_COUNT = 0;
 static uint8_t TIM2_READY_TO_USE = 0;
@@ -41,7 +43,10 @@ void Delay_micro_second(uint32_t delay) {
   uint32_t _ICCTarget = TIM2_INTERRUPT_CALL_COUNT;
   _ICCTarget += (delay / TIM2_ARR);
   uint32_t _CNTTarget = (delay % TIM2_ARR) + (uint32_t)TIM2->CNT;
-
+  _ICCTarget += (_CNTTarget / TIM2_ARR);
+  _CNTTarget = (_CNTTarget%TIM2_ARR);
+  //usart_println(USART2,itoa(_ICCTarget,10));
+  //usart_println(USART2,itoa(_CNTTarget,10));
   while (TIM2_INTERRUPT_CALL_COUNT < _ICCTarget)
     ;
   while ((uint32_t)TIM2->CNT < _CNTTarget)

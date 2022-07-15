@@ -9,10 +9,7 @@
 #include "../libs/stdlib/stdlibc.h"
 #include "../libs/timer/timer.h"
 #include "../protocols/usart/usart.h"
+#include "../libs/debug/debug.h"
 #include <stdint.h>
-
-extern void __debugRamUsage(void);
-
-
 
 #endif
