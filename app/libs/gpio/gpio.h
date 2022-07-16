@@ -5,7 +5,7 @@
 #include "../../../core/stm32f446re/registers/internal/peripherals.h"
 
 typedef struct __PinWithFunction {
-  GPIO_t *GPIO;
+  GPIO_t* GPIO;
   uint8_t pin;
   uint32_t af;
 } PinWithFunction;
@@ -80,14 +80,13 @@ typedef enum GPIO_INTERRUPT_TRIGGER_e {
   GPIO_INTERRUPT_TRIGGER_FALLING = 0b10,
 } GPIO_INTERRUPT_TRIGGER;
 
-void GPIO_ENABLE(GPIO_t *port);
-void pinConfig(GPIO_t *port, uint8_t pin, uint32_t config);
-void digitalWrite(GPIO_t *port, uint8_t pin, uint8_t value);
-GPIO_PIN_VALUE digitalRead(GPIO_t *port, uint8_t pin);
-uint8_t isPinLocked(GPIO_t *port,uint8_t pin);
+void GPIO_ENABLE(GPIO_t* port);
+void pinConfig(GPIO_t* port, uint8_t pin, uint32_t config);
+void digitalWrite(GPIO_t* port, uint8_t pin, uint8_t value);
+GPIO_PIN_VALUE digitalRead(GPIO_t* port, uint8_t pin);
+uint8_t isPinLocked(GPIO_t* port, uint8_t pin);
 
-void pinInterruptConfig(GPIO_t *port, uint8_t pin,
-                        uint8_t trigger, uint8_t priority);
-uint8_t isInterruptPending(GPIO_t *port, uint8_t pin);
+void pinInterruptConfig(GPIO_t* port, uint8_t pin, uint8_t trigger, uint8_t priority);
+uint8_t isInterruptPending(GPIO_t* port, uint8_t pin);
 
 #endif

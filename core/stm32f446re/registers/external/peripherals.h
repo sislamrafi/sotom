@@ -15,10 +15,8 @@ typedef struct {
   uint32_t volatile ODR;     /* Offset: 0x14 (R/W) Output Data Register */
   uint32_t volatile BSRR;    /* Offset: 0x18 (R/W) Bit Set/Reset Register */
   uint32_t volatile LCKR; /* Offset: 0x1C (R/W) Configuration Lock Register */
-  uint32_t volatile AFRL; /* Offset: 0x20 (R/W) Alternate Function Low Register
-                           */
-  uint32_t volatile AFRH; /* Offset: 0x24 (R/W) Alternate Function High Register
-                           */
+  uint32_t volatile AFRL; /* Offset: 0x20 (R/W) Alternate Function Low Register */
+  uint32_t volatile AFRH; /* Offset: 0x24 (R/W) Alternate Function High Register */
 } GPIO_t;
 
 #define GPIOA ((GPIO_t *)0x40020000)
@@ -188,11 +186,28 @@ typedef struct {
   uint32_t CR2;
   uint32_t CR3;
   uint32_t GTPR;
-}USART_t;
+} USART_t;
 
-#define USART1 ((USART_t *)0x40011000) 
+#define USART1 ((USART_t *)0x40011000)
 #define USART2 ((USART_t *)0x40004400)
 #define USART3 ((USART_t *)0x40004800)
 #define USART4 ((USART_t *)0x40004C00)
+
+typedef struct {
+  uint32_t volatile CR1;        /*!< I2C Control register 1,     Address offset: 0x00 */
+  uint32_t volatile CR2;        /*!< I2C Control register 2,     Address offset: 0x04 */
+  uint32_t volatile OAR1;       /*!< I2C Own address register 1, Address offset: 0x08 */
+  uint32_t volatile OAR2;       /*!< I2C Own address register 2, Address offset: 0x0C */
+  uint32_t volatile DR;         /*!< I2C Data register,          Address offset: 0x10 */
+  uint32_t volatile SR1;        /*!< I2C Status register 1,      Address offset: 0x14 */
+  uint32_t volatile SR2;        /*!< I2C Status register 2,      Address offset: 0x18 */
+  uint32_t volatile CCR;        /*!< I2C Clock control register, Address offset: 0x1C */
+  uint32_t volatile TRISE;      /*!< I2C TRISE register,         Address offset: 0x20 */
+  uint32_t volatile FLTR;       /*!< I2C FLTR register,          Address offset: 0x24 */
+} I2C_t;
+
+#define I2C1 ((I2C_t *)0x40005400)
+#define I2C2 ((I2C_t *)0x40005800)
+#define I2C3 ((I2C_t *)0x40005C00)
 
 #endif
