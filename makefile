@@ -9,7 +9,7 @@ LFLAGS= -nostdlib -T core/stm32f446re/stm32f446xx.ld -Wl,-Map=$(OUTPUT_FOLDER)/f
 
 OUTPUT_FOLDER = build
 
-all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o stdlibc.o lcd162a.o final.elf
+all:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o i2c.o stdlibc.o lcd162a.o final.elf
 
 #main app
 main.o:app/main/main.c
@@ -43,15 +43,22 @@ stdlibc.o:app/libs/stdlib/stdlibc.c
 usart.o:app/protocols/usart/usart.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
+#i2c config
+i2c.o:app/protocols/i2c/i2c.c
+	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
+
 #lcd162a lib
 lcd162a.o:app/devices/output/LCD162A/LCD162A.c
 	$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^
 
-final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o lcd162a.o stdlibc.o
+final.elf:main.o startup_stm32f446xx.o rcc.o timer.o gpio.o debug.o usart.o i2c.o lcd162a.o stdlibc.o
 	$(CC) $(LFLAGS) $(OUTPUT_FOLDER)/*.o  -o $(OUTPUT_FOLDER)/$@
 
 clean-windows:
 	@del /s *.o *.elf *.map
+
+clean:
+	rm -rf **/*.o **/*.elf
 
 load:
 	openocd -f board/stm32f4discovery.cfg

@@ -20,7 +20,7 @@ void Reset_Handler(void) {
 
   size = (uint32_t)&_edata - (uint32_t)&_sdata;
   uint8_t *pDst = (uint8_t *)&_sdata;
-  uint8_t *pSrc = (uint8_t *)&_etext;
+  uint8_t *pSrc = (uint8_t *)&_la_data;
   for (uint32_t i = 0; i < size; i++) {
     *pDst++ = *pSrc++;
   }
