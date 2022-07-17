@@ -5,7 +5,14 @@
 #define ON_BORD_LED 0x05U
 
 volatile int a = 10;
-int b[21];
+uint8_t b[22];
+uint16_t penMan = 160;
+uint8_t penMan1 = 160;
+uint32_t penMan11 = 161;
+uint8_t penMan2 = 16;
+uint8_t penMan3 = 16;
+uint8_t penMan4 = 16;
+uint8_t penMan5 = 16;
 
 int main(void) {
   int bb[100];
@@ -45,21 +52,20 @@ int main(void) {
   uint32_t aa = 0;
   while (1) {
     /* code */
-    //__debugRamUsage();
-    // usart_println(USART2, "Hello From while(1)");
-    // digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_HIGH);
-    // usart_println(USART2, "Hello From while(1) 2");
-    // //Delay(10);
-    // usart_println(USART2, "Hello From while(1) 3");
-    // digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_LOW);
-    // //Delay(10);
-    //usart_println(USART2, "Hello From while(1)s");
-    //usart_println(USART2, itoa(aa,10));
-    //aa++;
-    // usart_println(USART2,"Execution Time");
-    // aa = getMicroseconds();
-    // Delay_micro_second(10045);
-    // usart_println(USART2, itoa(getMicroseconds()-aa,10));
+    clearLCD();
+    printLineToLCD("Analog Button: \n");
+    printLineToLCD(itoa(__alalogReadDebug(),10));
+    digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_HIGH);
+    __digitalWriteDebugButton(ON_BORD_LED,GPIO_PIN_HIGH);
+    __digitalWriteDebugButton(12,GPIO_PIN_HIGH);
+    Delay(2000);
+    digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_LOW);
+    __digitalWriteDebugButton(ON_BORD_LED,GPIO_PIN_LOW);
+    __digitalWriteDebugButton(12,GPIO_PIN_LOW);
+    clearLCD();
+    printLineToLCD("Analog Button: \n");
+    printLineToLCD(itoa(__alalogReadDebug(),10));
+    Delay(2000);
   }
 }
 

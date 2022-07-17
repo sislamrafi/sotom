@@ -8,7 +8,7 @@
 #define TIM2_TICK_TIME (uint32_t)(TIM2_CLOCK_SPEED/TIM2_PSC)
 #define TIM2_TICK_TIME_MS_DIV (uint32_t)((TIM2_TICK_TIME)/1000U)
 #define TIM2_TICK_TIME_US_DIV (uint32_t)((TIM2_TICK_TIME)/1000000U)
-#define TIM2_ARR (uint32_t)1000U // 10ms //max: 0xffffffff - 1
+#define TIM2_ARR (uint32_t)1000U // 1ms //max: 0xffffffff - 1
 
 extern void SYS_ROUTINE(void);
 extern void TIM2_IRQHandler(void);

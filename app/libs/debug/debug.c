@@ -1,6 +1,6 @@
 #include "_debug.h"
 
-uint8_t DEBUG_BUTTON = 0;
+uint16_t DEBUG_BUTTON = 0;
 uint16_t DEBUG_ANALOG_IO = 0;
 
 void __debugRamUsage() {

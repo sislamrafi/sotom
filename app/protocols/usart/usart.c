@@ -1,6 +1,6 @@
 #include "usart.h"
 
-void configUSART(USART_t *usart, USART_CINFIG config, uint32_t baudrate) {
+void configUSART(USART_t *usart, USART_CONFIG config, uint32_t baudrate) {
   // enable gpios
   GPIO_ENABLE(config.RX.GPIO);
   GPIO_ENABLE(config.TX.GPIO);
