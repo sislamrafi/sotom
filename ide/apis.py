@@ -20,8 +20,8 @@ target = board.target
 flash = target.memory_map.get_boot_memory()
 session_start_time = None
 
-ELF_FILE = os.getcwd()+"\\build\\final.elf"
-MAP_FILE = os.getcwd()+"\\build\\final.map"
+ELF_FILE = os.getcwd()+"/build/final.elf"
+MAP_FILE = os.getcwd()+"/build/final.map"
 
 provider = None
 

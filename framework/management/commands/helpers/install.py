@@ -17,17 +17,17 @@ def printCL(_self, txt, _type=None):
 def install(_name,_pkg,_type=None,_self=None,_call_from=None):
     _type_str = None
     if _type == None:
-        _type_str = '.'
+        _type_str = ''
     else:
-        _type_str = _type
+        _type_str = '/'+_type
 
-    pkg_dir_src = F_STRUCT.FRAMEWORK_APP_FOLDER+'/'+_pkg+'/'+_type_str+'/'+_name
+    pkg_dir_src = F_STRUCT.FRAMEWORK_APP_FOLDER+'/'+_pkg+_type_str+'/'+_name
 
     pkg_dir_dest = None
     if _call_from == None:
-        pkg_dir_dest = F_STRUCT.APP_FOLDER+'/'+_pkg+'/'+_type_str+'/'+_name
+        pkg_dir_dest = F_STRUCT.APP_FOLDER+'/'+_pkg+_type_str+'/'+_name
     else:
-        pkg_dir_dest = F_STRUCT.cwd+'/'+_call_from+'/'+'app'+_pkg+'/'+_type_str+'/'+_name
+        pkg_dir_dest = F_STRUCT.cwd+'/'+_call_from+'/'+'app'+_pkg+_type_str+'/'+_name
 
     isDir = os.path.isdir(pkg_dir_src)
     if isDir:

@@ -93,10 +93,10 @@ def cfg_add_main(_name='main'):
 
 def cfg_add_or_remove_package(package_folder, _name, _type=None, add=True):
     if _type == None:
-        fullPath = package_folder+'/'+_name.upper()+'/'+_name.lower()+'.c'
+        fullPath = package_folder+'/'+_name.lower()+'/'+_name.lower()+'.c'
     else:
-        fullPath = package_folder+'/'+_type+'/'+_name.upper()+'/'+_name.lower()+'.c'
+        fullPath = package_folder+'/'+_type+'/'+_name.lower()+'/'+_name.lower()+'.c'
     if not os.path.isfile(fullPath):
-        print("Package: {} doesn't exists".format(_name.upper()))
+        print("Package: {} doesn't exists".format(_name.lower()))
         return
     cfg_addOrRemove_object(fullPath.replace(F_STRUCT.cwd+'/', ''), add)
