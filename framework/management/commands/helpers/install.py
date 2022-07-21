@@ -15,6 +15,7 @@ def printCL(_self, txt, _type=None):
             _self.stdout.write(_self.style.NOTICE(txt))
 
 def install(_name,_pkg,_type=None,_self=None,_call_from=None):
+    _name=_name.lower()
     _type_str = None
     if _type == None:
         _type_str = ''

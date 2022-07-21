@@ -1,0 +1,8 @@
+notes.txt
+/framework/__pycache__/
+/framework/management/__pycache__/
+/frontend/__pycache__/
+/ide/__pycache__/
+/structure/build
+/structure/makefile
+/.vscode
