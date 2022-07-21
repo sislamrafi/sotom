@@ -4,7 +4,7 @@
 
 Sotom is a framework for developing embeded system firmware. It's a python based framework.
 
-![alt text](static/sotom_logo.jpg)
+![alt text](static/sotom_logo_128x128.jpg)
 
 #### Built With
 
