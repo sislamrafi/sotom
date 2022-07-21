@@ -132,7 +132,7 @@ sotom run
 
 ## Roadmap
 
-See the [open issues](https://github.com/sislamrafi/webartisan/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/sislamrafi/sotom/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
