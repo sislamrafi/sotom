@@ -1,0 +1,84 @@
+
+import framework.management.commands.helpers.file_struct as F_STRUCT
+import framework.management.commands.helpers.config as ConfigManager
+
+import os
+import platform
+import sotom.settings as Settings
+from django.core.management import call_command
+
+def printCL(_self, txt, _type=None):
+    if _self == None:
+        print(txt)
+    else:
+        if _type == 'success':
+            _self.stdout.write(_self.style.SUCCESS(txt))
+        if _type == 'error':
+            _self.stdout.write(_self.style.ERROR(txt))
+        if _type == 'notice':
+            _self.stdout.write(_self.style.NOTICE(txt))
+
+def build(_self=None):
+    makeFile = open(F_STRUCT.cwd+'/'+'makefile','w+')
+    ConfigManager.cfg_load()
+    data = ConfigManager.config
+
+    #print makefile variables
+    for key in data.keys():
+        if isinstance(data[key], str):
+            makeFile.write(key+' = '+data[key]+'\n')
+    makeFile.write('\n\n')
+
+    #print all
+    if 'dependency' in data.keys() and isinstance(data['dependency'], list):
+        makeFile.write('all:')
+        for dep in data['dependency']:
+            o_name = dep.replace('\\','_')
+            o_name = o_name.replace('/','_')
+            o_name = o_name.replace('.c','.o')
+            makeFile.write(o_name+' ')
+    makeFile.write('final.elf')
+    makeFile.write('\n\n')
+
+    #print final.elf
+    if 'dependency' in data.keys() and isinstance(data['dependency'], list):
+        makeFile.write('final.elf:')
+        for dep in data['dependency']:
+            o_name = dep.replace('\\','_')
+            o_name = o_name.replace('/','_')
+            o_name = o_name.replace('.c','.o')
+            makeFile.write(o_name+' ')
+    makeFile.write('\n\t'+"$(CC) $(LFLAGS) $(OUTPUT_FOLDER)/*.o  -o $(OUTPUT_FOLDER)/$@\n")
+    makeFile.write('\n\n')
+
+    #print dependency lists
+    if 'dependency' in data.keys() and isinstance(data['dependency'], list):
+        for dep in data['dependency']:
+            o_name = dep.replace('\\','_')
+            o_name = o_name.replace('/','_')
+            o_name = o_name.replace('.c','.o')
+            makeFile.write(o_name+':'+dep+'\n')
+            makeFile.write('\t'+"$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^\n")
+            makeFile.write('\n')
+
+    #print clean
+    makeFile.write('\n\nclean-windows:\n')
+    makeFile.write('\t@del /s *.o *.elf *.map')
+
+    #print load
+    makeFile.write('\n\nload:\n')
+    makeFile.write('\topenocd -f board/stm32f4discovery.cfg')
+
+    printCL(_self, "Make file created...",'success')
+    makeFile.close()
+
+    #build file
+    if not os.path.isdir(F_STRUCT.cwd+'/'+'build'):
+        os.mkdir(F_STRUCT.cwd+'/'+'build')
+
+    if platform.system().lower() == 'windows':
+        os.system('make clean-windows')
+
+    if os.path.isdir(F_STRUCT.cwd+'/'+'build'):
+        printCL(_self, "Running make command...",'success')
+        os.system('make')

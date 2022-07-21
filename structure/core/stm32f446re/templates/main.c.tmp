@@ -1,0 +1,25 @@
+#include "main.h"
+
+#define ON_BORD_LED 0x05U
+
+int main(void) {
+  rcc_config_HSE8MHz_SYS180MHz();
+  ConfigTimer2ForSystem();
+
+  GPIO_ENABLE(GPIOA);
+  pinConfig(GPIOA, ON_BORD_LED, GPIO_OUTPUT);
+
+  while (1) {
+    /* code */
+    digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_HIGH);
+    __digitalWriteDebugButton(ON_BORD_LED,GPIO_PIN_HIGH);
+    Delay(2000);
+    digitalWrite(GPIOA, ON_BORD_LED, GPIO_PIN_LOW);
+    __digitalWriteDebugButton(ON_BORD_LED,GPIO_PIN_LOW);
+    Delay(2000);
+  }
+}
+
+void SYS_ROUTINE(void) {
+  __debugRamUsage();
+}
