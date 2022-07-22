@@ -15,6 +15,8 @@ LIBS_FOLDER = cwd+"/app/libs"
 PROTOCOLS_FOLDER = cwd+"/app/protocols"
 INTERRUPTS_FOLDER = cwd+"/app/interrupts"
 MAIN_FOLDER = cwd+"/app/main"
+BUILD_PATH = cwd+"/build"
+BUILD_ELF_FILE_PATH = BUILD_PATH+'/'+'final.elf'
 
 # Get sotom frame work base
 FRAMEWORK_CORE_FOLDER = str(Settings.BASE_DIR)+'/structure/core'
