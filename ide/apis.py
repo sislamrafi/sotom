@@ -14,10 +14,10 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-session = ConnectHelper.session_with_chosen_probe(auto_open=False)
-board = session.board
-target = board.target
-flash = target.memory_map.get_boot_memory()
+session = None
+board = None
+target = None
+flash = None
 session_start_time = None
 
 ELF_FILE = os.getcwd()+"/build/final.elf"
@@ -25,6 +25,15 @@ MAP_FILE = os.getcwd()+"/build/final.map"
 
 provider = None
 
+def initSession():
+    global session
+    global board
+    global target
+    global flash
+    session = ConnectHelper.session_with_chosen_probe(auto_open=False)
+    board = session.board
+    target = board.target
+    flash = target.memory_map.get_boot_memory()
 
 def loadELF_MAP():
     global MAP_FILE
@@ -50,7 +59,7 @@ def loadELF():
 def checkSessionOrError():
     global session
     response = {}
-    if not session.is_open:
+    if session == None or not session.is_open:
         response['status'] = 'error'
         response['message'] = 'No session is running'
         return response
@@ -83,11 +92,15 @@ def get_debuger_session(request):
     global session_start_time
     global session
     response = {}
-    response['is_running'] = session.is_open
+    if session == None:
+        response['is_running'] = False
+    else:
+        response['is_running'] = session.is_open
 
-    if session.is_open:
+    if session != None and session.is_open:
         print("A session is running already")
     else:
+        initSession()
         session.open()
         session_start_time = datetime.datetime.now()
         target.reset()
