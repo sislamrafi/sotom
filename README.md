@@ -123,6 +123,10 @@ To build project and create makefile:
 #auto generate makefile and build project 
 sotom build
 ```
+To flash command to device:
+```sh
+sotom flash
+```
 To run the IDE and Debugger.
 ```sh
 #this will provide user a link
