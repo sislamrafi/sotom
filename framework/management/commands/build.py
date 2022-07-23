@@ -12,7 +12,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--all', dest='all' ,action='store_true')
+        parser.add_argument('-mc','--map-csv', dest='mcsv' ,action='store_true')
 
     def handle(self, *args, **options):
-        if not options['all']:
-            BuildManager.build(self)
+        if options['all']!=None:
+            BuildManager.build(self,options['mcsv'])

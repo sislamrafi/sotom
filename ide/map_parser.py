@@ -200,6 +200,9 @@ def get_symbol_details(name,_target=None,bit=32):
 
     output = {'name':None,'type':None,'address':None, 'value':None, 'section':None, 'sub_section':None, 'file':None, 'size':None}
     try:
+        if not isinstance(name, str) or 'align:(' in name:
+            raise ValueError()
+        
         pos = variables.index(name)
         print(pos)
         output['name'] = name
@@ -221,6 +224,52 @@ def get_symbol_details(name,_target=None,bit=32):
                 output['value'] = value
         elif output['type'] == 'value':
             output['value'] = origins[pos]
+        return output
+    except ValueError:
+        return output
+
+def get_symbol_details_by_origin(origin,_target=None,bit=32):
+    global variables
+    global vartype
+    global origins
+    global section
+    global sub_section
+    global filename
+    global lengthVar
+
+    output = {'name':None,'type':None,'address':None, 'value':None, 'section':None, 'sub_section':None, 'file':None, 'size':None}
+    try:
+        if not isinstance(origin, int):
+            raise ValueError()
+
+        pos = None
+        for i in range(len(origins)):
+            if origins[i] == origin and not 'align:(' in variables[i]:
+                pos = i
+                break
+        if pos == None:
+            raise ValueError()
+
+        print(pos)
+        output['name'] = variables[pos]
+        output['type'] = vartype[pos]
+        output['section'] = section[pos]
+        output['sub_section'] = sub_section[pos]
+        output['file'] = filename[pos]
+        output['size'] = lengthVar[pos]
+        if output['type'] == 'address':
+            output['address'] = origin
+            if _target != None:
+                value = None
+                if output['size'] >= 4:
+                    value = _target.read32(output['address'])
+                elif output['size'] >= 2:
+                    value = _target.read16(output['address'])
+                else:
+                    value = _target.read8(output['address'])
+                output['value'] = value
+        elif output['type'] == 'value':
+            output['value'] = origin
         return output
     except ValueError:
         return output

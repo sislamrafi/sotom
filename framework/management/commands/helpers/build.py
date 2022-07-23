@@ -1,7 +1,7 @@
 
 import framework.management.commands.helpers.file_struct as F_STRUCT
 import framework.management.commands.helpers.config as ConfigManager
-
+import ide.map_parser as MAP_PARSER
 import os
 import platform
 import sotom.settings as Settings
@@ -18,7 +18,7 @@ def printCL(_self, txt, _type=None):
         if _type == 'notice':
             _self.stdout.write(_self.style.NOTICE(txt))
 
-def build(_self=None):
+def build(_self=None,mcsv=False):
     makeFile = open(F_STRUCT.cwd+'/'+'makefile','w+')
     ConfigManager.cfg_load()
     data = ConfigManager.config
@@ -82,3 +82,8 @@ def build(_self=None):
     if os.path.isdir(F_STRUCT.cwd+'/'+'build'):
         printCL(_self, "Running make command...",'success')
         os.system('make')
+
+    if mcsv:
+        MAP_PARSER.init(F_STRUCT.BUILD_MAP_FILE_PATH)
+        MAP_PARSER.parse()
+        MAP_PARSER.save_output(F_STRUCT.BUILD_PATH+'/'+'map.csv')

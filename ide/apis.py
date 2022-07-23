@@ -249,13 +249,12 @@ def searchMemory(request):
 
     if is_integer:
         try:
-            pos = MapParser.origins.index(value)
-            value = MapParser.variables[pos]
-            val = MapParser.get_symbol_details(value, target)
+            val = MapParser.get_symbol_details_by_origin(value, target)
         except ValueError:
             print('address not found in ELF')
-        
-    val = MapParser.get_symbol_details(value, target)
+    else:
+        val = MapParser.get_symbol_details(value, target)
+    
     response = val
 
     if val['name'] == None and is_integer:

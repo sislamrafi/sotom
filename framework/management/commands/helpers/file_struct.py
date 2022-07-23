@@ -17,7 +17,7 @@ INTERRUPTS_FOLDER = cwd+"/app/interrupts"
 MAIN_FOLDER = cwd+"/app/main"
 BUILD_PATH = cwd+"/build"
 BUILD_ELF_FILE_PATH = BUILD_PATH+'/'+'final.elf'
-
+BUILD_MAP_FILE_PATH = BUILD_PATH+'/'+'final.map'
 # Get sotom frame work base
 FRAMEWORK_CORE_FOLDER = str(Settings.BASE_DIR)+'/structure/core'
 FRAMEWORK_APP_FOLDER = str(Settings.BASE_DIR)+'/structure/app'
