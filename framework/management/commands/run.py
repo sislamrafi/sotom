@@ -10,7 +10,7 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.port = port
         self.host = socket.gethostbyname(socket.gethostname())
-        self.host = 'localhost'
+        # self.host = 'localhost'
         if self.host == None or self.host == '0.0.0.0':
             self.host='localhost'
 

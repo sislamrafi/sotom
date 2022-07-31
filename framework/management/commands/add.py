@@ -20,10 +20,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cwd = os.getcwd()
         if options['device']:
-            AddCommandManager.addDevice(self,options['device'][0],options['device'][1])
+            AddCommandManager.addDevice(self,options['device'][0],options['device'][1].lower())
         if options['lib']:
-            AddCommandManager.addLibs(self,options['lib'][0])
+            AddCommandManager.addLibs(self,options['lib'][0].lower())
         if options['interrupt']:
-            AddCommandManager.addInterrupts(self,options['interrupt'][0])
+            AddCommandManager.addInterrupts(self,options['interrupt'][0].lower())
         if options['protocol']:
-            AddCommandManager.addProtocols(self,options['protocol'][0])
+            AddCommandManager.addProtocols(self,options['protocol'][0].lower())

@@ -74,20 +74,6 @@ def checkFileOrError(filename, type='ELF'):
         return response
     return None
 
-
-def get_device(request):
-    check_session = checkSessionOrError()
-    if check_session != None:
-        return JsonResponse(check_session)
-
-    response = {}
-    response['status'] = 'ok'
-    response['name'] = board.name
-    response['target'] = board.target_type
-    response['uinque_id'] = board.unique_id
-    return JsonResponse(response)
-
-
 def get_debuger_session(request):
     global session_start_time
     global session
@@ -110,6 +96,18 @@ def get_debuger_session(request):
 
     response['session_start_time'] = session_start_time
     response['status'] = 'ok'
+    return JsonResponse(response)
+
+def get_device(request):
+    check_session = checkSessionOrError()
+    if check_session != None:
+        return JsonResponse(check_session)
+
+    response = {}
+    response['status'] = 'ok'
+    response['name'] = board.name
+    response['target'] = board.target_type
+    response['uinque_id'] = board.unique_id
     return JsonResponse(response)
 
 
@@ -194,9 +192,9 @@ def get_memory_info(request):
     bssSize = MapParser.get_symbol_details("_bss_size", target)
     dataSize = MapParser.get_symbol_details("_data_size", target)
     textSize = MapParser.get_symbol_details("_text_size", target)
-    debugButton = MapParser.get_symbol_details("DEBUG_BUTTON", target, bit=16)
-    debugAnalogIo = MapParser.get_symbol_details(
-        "DEBUG_ANALOG_IO", target, bit=16)
+    # debugButton = MapParser.get_symbol_details("DEBUG_BUTTON", target, bit=16)
+    # debugAnalogIo = MapParser.get_symbol_details(
+    #     "DEBUG_ANALOG_IO", target, bit=16)
     clockSpeed = MapParser.get_symbol_details("SYS_CLOCK_SPEED", target)
 
     # print(msp) #return
@@ -208,10 +206,10 @@ def get_memory_info(request):
     response['total_flash'] = FlashTotal
     response['total_sram'] = SRamTotal
     response['sys_clock_speed'] = clockSpeed['value']
-    response['debug_button_addr'] = debugButton['address']
-    response['debug_button'] = debugButton['value']
-    response['debug_analog_io'] = debugAnalogIo['value']
-    response['debug_analog_io_addr'] = debugAnalogIo['address']
+    # response['debug_button_addr'] = debugButton['address']
+    # response['debug_button'] = debugButton['value']
+    # response['debug_analog_io'] = debugAnalogIo['value']
+    # response['debug_analog_io_addr'] = debugAnalogIo['address']
     response['message'] = "Success"
     response['status'] = 'ok'
 

@@ -15,6 +15,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['device']:
-            InstallManager.install(options['device'][1], 'devices',_type=options['device'][0],_self=self)
+            InstallManager.install(options['device'][1].lower(), 'devices',_type=options['device'][0].lower(),_self=self)
         if options['lib']:
-            InstallManager.install(options['lib'][0], 'libs',_self=self)
+            InstallManager.install(options['lib'][0].lower(), 'libs',_self=self)

@@ -6,7 +6,7 @@
 #include "../devices/output/LCD162A/LCD162A.h"
 #include "../libs/gpio/gpio.h"
 #include "../libs/rcc/rcc.h"
-#include "../libs/stdlib/stdlibc.h"
+#include "../libs/stdlib/stdlib.h"
 #include "../libs/timer/timer.h"
 #include "../protocols/usart/usart.h"
 #include "../libs/debug/debug.h"
