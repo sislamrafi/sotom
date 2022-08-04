@@ -272,3 +272,31 @@ def searchMemory(request):
     response['status'] = 'ok'
 
     return JsonResponse(response)
+
+def getPeripherals(request):
+    global target
+    check_session = checkSessionOrError()
+    if check_session != None:
+        return JsonResponse(check_session)
+
+    peripherals = target.svd_device.peripherals
+    listP = []
+    obj = {}
+    index = 0
+    for peripheral in peripherals:
+        if peripheral.group_name not in obj.keys():
+            obj[peripheral.group_name]=[]
+        sobj = {}
+        sobj['id'] = index
+        sobj['name'] = peripheral.name
+        sobj['address'] = peripheral.base_address
+        obj[peripheral.group_name].append(sobj)
+        index+=1
+
+    response= {}
+    response['message'] = "Success"
+    response['status'] = 'ok'
+    response['peripherals'] = obj
+
+    return JsonResponse(response)
+    
