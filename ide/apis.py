@@ -299,4 +299,27 @@ def getPeripherals(request):
     response['peripherals'] = obj
 
     return JsonResponse(response)
+
+
     
+def getPeripheralById(request):
+    global target
+    check_session = checkSessionOrError()
+    if check_session != None:
+        return JsonResponse(check_session)
+
+    id = request.GET.get('id', None)
+    address = request.GET.get('address', None)
+
+    registers = target.svd_device.peripherals[int(id)].registers
+    lst = []
+    for register in registers:
+        lst.append(register.to_dict())
+
+    response= {}
+    response['message'] = "Success"
+    response['status'] = 'ok'
+    response['registers'] = lst
+
+    return JsonResponse(response)
+

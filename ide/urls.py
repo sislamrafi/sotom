@@ -7,6 +7,7 @@ urlpatterns = [
     path('get_memory_info/', api.get_memory_info, name="memory.info"),
     path('search_memory/', api.searchMemory, name="memory.search"),
     path('get_peripherals/', api.getPeripherals, name="peripherals"),
+    path('get_peripheral-by-id/', api.getPeripheralById, name="peripheral_by_id"),
     
     path('command_device/',api.command_device, name="command" ),
 ]
