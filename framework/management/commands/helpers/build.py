@@ -3,6 +3,7 @@ import framework.management.commands.helpers.file_struct as F_STRUCT
 import framework.management.commands.helpers.config as ConfigManager
 import ide.map_parser as MAP_PARSER
 import os
+import sys
 import platform
 import sotom.settings as Settings
 from django.core.management import call_command

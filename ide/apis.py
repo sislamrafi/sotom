@@ -1,10 +1,12 @@
 # api code goes here
 import ide.map_parser as MapParser
 from django.http import JsonResponse
-
+from django.core.management import call_command
 import os
 import json
 import datetime
+import io
+from io import StringIO
 
 from pyocd.core.helpers import ConnectHelper
 from pyocd.flash.file_programmer import FileProgrammer
@@ -143,6 +145,9 @@ def command_device(request):
     elif command == 'halt':
         target.halt()
         response['message'] = "Device Halted"
+    elif command == 'step':
+        target.step()
+        response['message'] = "Jump 1 Step"
     elif command == 'flash':
         MapParser.close()
         target.reset_and_halt()
@@ -151,11 +156,19 @@ def command_device(request):
         response['message'] = "100\\% Flashed"
         loadELF_MAP()
         MapParser.parse()
+    elif command == 'build':
+        out = StringIO()
+        call_command('build', stdout=out)
+        value = out.getvalue()
+        print("value of output:",value)
+        if(value == 1):
+            return HttpResponse(status=500)
     elif command == 'write16':
         target.write16(int(address), int(value))
     elif command == 'write32':
         target.write32(int(address), int(value))
 
+    response['command'] = command
     response['device_state'] = target.get_state().value
     response['status'] = status
 

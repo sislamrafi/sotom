@@ -127,10 +127,10 @@ To flash code to device:
 ```sh
 sotom flash
 ```
-To run the IDE and Debugger.
+To run the Debugger.
 ```sh
 #this will provide user a link
-sotom run
+sotom debug
 ```
 <!-- ROADMAP -->
 
