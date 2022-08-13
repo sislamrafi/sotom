@@ -125,11 +125,13 @@ def parse():
                 continue
 
             #for size calculation
-            if SIZE_TAKER_FLAG:
+            if SIZE_TAKER_FLAG and len(LINE_SPLIT)>=2:
                 SIZE = int(LINE_SPLIT[1],16) - int(PRV_ORIGIN,16)
                 lengthVar.append(SIZE)
-            PRV_ORIGIN = LINE_SPLIT[1]
-            SIZE_TAKER_FLAG = False
+
+            if len(LINE_SPLIT)>=2:
+                PRV_ORIGIN = LINE_SPLIT[1]
+                SIZE_TAKER_FLAG = False
 
         if isValueSection(MAP_LINE):
             VAR_TYPE = 'address'
