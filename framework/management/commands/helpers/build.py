@@ -36,6 +36,7 @@ def build(_self=None,mcsv=False):
         for dep in data['dependency']:
             o_name = dep.replace('\\','_')
             o_name = o_name.replace('/','_')
+            o_name = o_name.replace('..','_')
             o_name = o_name.replace('.c','.o')
             makeFile.write(o_name+' ')
     makeFile.write('final.elf')
@@ -47,6 +48,7 @@ def build(_self=None,mcsv=False):
         for dep in data['dependency']:
             o_name = dep.replace('\\','_')
             o_name = o_name.replace('/','_')
+            o_name = o_name.replace('..','_')
             o_name = o_name.replace('.c','.o')
             makeFile.write(o_name+' ')
     makeFile.write('\n\t'+"$(CC) $(LFLAGS) $(OUTPUT_FOLDER)/*.o  -o $(OUTPUT_FOLDER)/$@\n")
@@ -57,6 +59,7 @@ def build(_self=None,mcsv=False):
         for dep in data['dependency']:
             o_name = dep.replace('\\','_')
             o_name = o_name.replace('/','_')
+            o_name = o_name.replace('..','_')
             o_name = o_name.replace('.c','.o')
             makeFile.write(o_name+':'+dep+'\n')
             makeFile.write('\t'+"$(CC) $(CFLAGS) -o $(OUTPUT_FOLDER)/$@ $^\n")
@@ -64,7 +67,9 @@ def build(_self=None,mcsv=False):
 
     #print clean
     makeFile.write('\n\nclean-windows:\n')
-    makeFile.write('\t@del /s *.o *.elf *.map')
+    makeFile.write('\t@del /s build/*.o build/*.elf build/*.map')
+    makeFile.write('\n\nclean-linux:\n')
+    makeFile.write('\trm -f build/*.o build/*.elf build*.map')
 
     #print load
     makeFile.write('\n\nload:\n')
@@ -79,6 +84,8 @@ def build(_self=None,mcsv=False):
 
     if platform.system().lower() == 'windows':
         os.system('make clean-windows')
+    if platform.system().lower() == 'linux':
+        os.system('make clean-linux')
 
     if os.path.isdir(F_STRUCT.cwd+'/'+'build'):
         printCL(_self, "Running make command...",'success')

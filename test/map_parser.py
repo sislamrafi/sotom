@@ -99,11 +99,13 @@ def parse():
                 continue
 
             #for size calculation
-            if SIZE_TAKER_FLAG:
+            if SIZE_TAKER_FLAG and len(LINE_SPLIT)>=2:
                 SIZE = int(LINE_SPLIT[1],16) - int(PRV_ORIGIN,16)
                 lengthVar.append(SIZE)
-            PRV_ORIGIN = LINE_SPLIT[1]
-            SIZE_TAKER_FLAG = False
+
+            if len(LINE_SPLIT)>=2:
+                PRV_ORIGIN = LINE_SPLIT[1]
+                SIZE_TAKER_FLAG = False
 
         if isValueSection(MAP_LINE):
             VAR_TYPE = 'address'
@@ -196,7 +198,7 @@ def get_symbol_details(name,_target=None,bit=32):
         return output
 
 if __name__ == "__main__":
-   init("F:\\Projects\\MicroController\\STM32F446RE\\sotom_v1\\build\\final.map")
+   init("test/final.map")
    parse()
    save_output('data_out.csv')
    print(get_symbol_details('CURRENT_MSP'))
