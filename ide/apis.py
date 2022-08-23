@@ -336,3 +336,43 @@ def getPeripheralById(request):
 
     return JsonResponse(response)
 
+
+def readMemoryBlock(request):
+    global target
+    check_session = checkSessionOrError()
+    if check_session != None:
+        return JsonResponse(check_session)
+
+    address = int( request.GET.get('address', None))
+    a_range =  int( request.GET.get('size', None))
+
+    response = {}
+    response['data']=[]
+    
+    while a_range!=0:
+        _data = {}
+        _data['address'] = address
+
+        try:
+            _data['value'] = target.read32(address)
+            _data['size'] = 32
+            address+=4
+        except:
+            try:
+                _data['value'] = target.read16(address)
+                _data['size'] = 16
+                address+=2
+            except:
+                try:
+                    _data['value'] = target.read8(address)
+                    _data['size'] = 8
+                    address+=1
+                except:
+                    _data['value'] = None
+                    _data['size'] = 4
+                    address+=4
+        response['data'].append(_data)
+        a_range-=1
+
+    response['status'] = 'ok'
+    return JsonResponse(response)
